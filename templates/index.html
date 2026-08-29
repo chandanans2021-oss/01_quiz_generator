@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+    <title>AI Quiz Generator</title>
+</head>
+<body>
+
+<h1>AI-Powered Quiz Generator</h1>
+
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".pdf" required>
+
+    <input type="number" name="count" value="5" min="1" max="20">
+
+    <button type="submit">Generate Quiz</button>
+</form>
+
+{% if error %}
+<p style="color:red">{{ error }}</p>
+{% endif %}
+
+{% if quiz %}
+<hr>
+
+{% for q in quiz %}
+
+<h3>{{ loop.index }}. {{ q.question }}</h3>
+
+{% set question_number = loop.index %}
+
+{% for option in q.options %}
+<label>
+    <input type="radio" name="q{{ question_number }}" value="{{ option }}">
+    {{ option }}
+</label>
+<br>
+{% endfor %}
+
+<p>
+    <b>Correct answer:</b> {{ q.answer }}
+</p>
+
+{% endfor %}
+
+{% endif %}
+
+</body>
+</html>
